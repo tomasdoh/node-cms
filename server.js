@@ -1,11 +1,19 @@
 var http = require('http');
 
-var message = "request received, you're reading the response!"
+var posts = "Welcome to the posts page"
+var home = "Welcome to the home page"
 
 function handler (request, response) {
+  var endpoint = request.url
+  if (endpoint === "/") {
+    response.writeHead(200, {"Content-Type": "text/html"})
+    response.write(home);
+    response.end();
+  } else if (endpoint === "/posts") {
   response.writeHead(200, {"Content-Type": "text/html"})
-  response.write(message);
+  response.write(posts);
   response.end();
+  }
 }
 
 var server = http.createServer(handler);
