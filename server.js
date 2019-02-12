@@ -1,18 +1,20 @@
 var http = require('http');
+var fs = require('fs');
 
-var posts = "Welcome to the posts page"
-var home = "Welcome to the home page"
 
 function handler (request, response) {
+
   var endpoint = request.url
+
   if (endpoint === "/") {
     response.writeHead(200, {"Content-Type": "text/html"})
-    response.write(home);
-    response.end();
-  } else if (endpoint === "/posts") {
-  response.writeHead(200, {"Content-Type": "text/html"})
-  response.write(posts);
-  response.end();
+    fs.readFile(__dirname + '/public/index.html', function(error, file) {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      response.end(file);
+    });
   }
 }
 
